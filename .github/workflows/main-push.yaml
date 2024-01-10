@@ -1,0 +1,29 @@
+name: main-push
+on:
+  push:
+    branches:
+      - main
+env:
+  SRC: ${{github.workspace}}
+  VAULT_ROOT_TOKEN: ${{ secrets.VAULT_ROOT_TOKEN }}
+  VAULT_ADDR: ${{ secrets.VAULT_ADDR}}
+  GCP_PROJECT_NAME: ${{secrets.GCP_PROJECT_NAME}}
+  GOOGLE_APPLICATION_CREDENTIALS: "/tmp/gsa_key.json"
+  BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
+jobs:
+  prod-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run git safe.directory
+        if: ${{ github.event.inputs.LOCAL == 'true' }}
+        run: git config --global --add safe.directory "*"
+      - name: "check github repository"
+        uses: actions/checkout@v3
+      - name: Run Instructions Action
+        id: detect-files
+        uses: ./
+        with:
+          commit-message: "Example commit message INSTRUCTIONS=instruction1"
+          possible-instructions: "instruction1,instruction2,instruction3"
+          instructions-keyword: "INSTRUCTIONS="
+      - run: echo  This is the result ${{ steps.detect-files.outputs.result }}

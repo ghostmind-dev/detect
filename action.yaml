@@ -1,0 +1,16 @@
+name: "Instructions Action"
+description: "Processes instructions from commit messages"
+inputs:
+  commit-message:
+    description: "Commit message to process"
+    required: true
+  possible-instructions:
+    description: "Comma-separated list of possible instructions"
+    required: true
+  instructions-keyword:
+    description: "Keyword used to identify instructions in commit messages"
+    required: true
+    default: "INSTRUCTIONS="
+runs:
+  using: "node16"
+  main: "dist/index.js"
