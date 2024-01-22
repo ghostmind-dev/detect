@@ -16,7 +16,7 @@
     "NODE_OPTION": "--openssl-legacy-provider",
     "PATH": "${containerEnv:PATH}:/home/vscode/.npm-global/bin",
     "SRC": "${containerWorkspaceFolder}",
-    "LOCALHOST_SRC": "${env:HOME}${env:USERPROFILE}/projects/container/detect",
+    "LOCALHOST_SRC": "${env:HOME}${env:USERPROFILE}/projects/ghostmind/potion",
     "GOOGLE_APPLICATION_CREDENTIALS": "/tmp/gsa_key.json",
     "GCP_PROJECT_NAME": "ghostmind-core",
     "VAULT_ROOT_TOKEN": "${localEnv:VAULT_ROOT_TOKEN}",
@@ -24,7 +24,7 @@
     "BUILDX_NO_DEFAULT_ATTESTATIONS": "1"
   },
   "containerEnv": {
-    "INIT_EXPORT_ENV_PROJECT": "true",
+    "INIT_EXPORT_ENV_PROJECT": "false",
     "INIT_EXPORT_ENV_ALL": "false",
     "INIT_DEV_INSTALL_DEPENDENCIES": "false",
     "INIT_DEV_RESET_LIVE": "true",
@@ -33,13 +33,8 @@
     "INIT_LOGIN_GAM": "false",
     "INIT_LOGIN_VAULT": "true"
   },
-  "forwardPorts": [
-    "3000:3000",
-    4001
-  ],
-  "appPort": [
-    "8085:8085"
-  ],
+  "forwardPorts": ["3000:3000", 4001],
+  "appPort": ["8085:8085"],
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
     "source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind",
@@ -58,9 +53,7 @@
       "settings": {
         "prettier.singleQuote": true,
         "vs-kubernetes": {
-          "disable-linters": [
-            "resource-limits"
-          ]
+          "disable-linters": ["resource-limits"]
         },
         "shellformat.path": "/home/vscode/go/bin/shfmt"
       },
